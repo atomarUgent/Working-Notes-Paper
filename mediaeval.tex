@@ -1,0 +1,158 @@
+\documentclass{acm_proc_article-me11_tweaked}
+
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{upgreek}
+\usepackage{bm}
+
+\newcommand{\footremember}[2]{%
+   \footnote{#2}
+    \newcounter{#1}
+    \setcounter{#1}{\value{footnote}}%
+}
+\newcommand{\footrecall}[1]{%
+    \footnotemark[\value{#1}]%
+} 
+
+
+\begin{document}
+\conferenceinfo{\textit{MediaEval 2013 Workshop,}}{October 18-19, 2013, Barcelona, Spain} 
+
+\title{Ghent University-iMinds at MediaEval 2013 Diverse Images: Hierarchical Clustering\ldots  }
+
+\numberofauthors{5} 
+\author{
+% 1st. author
+\alignauthor
+Baptist Vandersmissen$^1$\\
+\affaddr{baptist.vandersmissen@ugent.be}\\    
+% 2nd. author
+\alignauthor
+Abineshwar Tomar$^1$ \\
+\affaddr{abineshwar.tomar@ugent.be}
+% 3rd. author
+\alignauthor
+Fr\'ederic Godin$^1$\\
+\affaddr{frederic.godin@ugent.be}
+\and  % use '\and' if you need 'another row' of author names
+% 4th. author
+\alignauthor
+Wesley De Neve$^{1,2}$\\
+\affaddr{wesley.deneve@ugent.be}
+% 5th. author
+\alignauthor
+Rik Van de Walle$^1$\\
+\affaddr{rik.vandewalle@ugent.be}
+\and
+% \sharedaffiliation
+%       \affaddr{ \email{\texttt{\{baptist.vandersmissen, abineshwar.tomar, frederic.godin, wesley.deneve, rik.vandewalle\}@ugent.be}}}\\
+\sharedaffiliation{\affaddr{$^1$~ELIS - Multimedia Lab, Ghent University -- iMinds, Ghent, Belgium}}\\
+\sharedaffiliation{\affaddr{$^2$~Image and Video Systems Lab, KAIST, Daejeon, South Korea}}\\ 
+}
+\maketitle
+\begin{abstract}
+In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr based ranked set of social photos\ldots
+\end{abstract}
+% % A category with the (minimum) three required fields
+% \category{H.4}{Information Systems Applications}{Miscellaneous}
+% %A category including the fourth, optional field follows...
+% \category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+% 
+% \terms{Theory}
+% 
+% \keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
+
+\section{Introduction}
+In this paper, we describe our approach for tackling the MediaEval 2013 Retrieving Diverse Social Images Task \cite{mediaeval-diversephotos}.
+This task focuses on result diversification in the context of social photo retrieval. 
+A modern retrieval system focuses almost exclusively on the accuracy of the results related to a certain information need. 
+These retrieval systems often result in very relevant but also very similar photos.
+This task aims at improving the retrieval technology linked to social photos with the goal of retrieving not only representative but also diverse photos depicting the information need in a complete manner.
+\\\\
+Photos of popular and less popular monuments are fetched from Flickr\footnote{www.flickr.com} (based on name and/or GPS coordinates) and ranked with its default ``relevance'' algorithm.
+Apart from a list of photos, a large set of visual and textual features derived from these photos are given.
+The dataset is subdivided into a development set and a test set and contains a total of 396 monuments.
+The requirements of this task are to provide three runs on the test set, respectively focusing on solely visual features, textual features and a combination of both to perform a refinement of the Flickr ranking.
+This refinement is a list of maximum 50 newly ranked photos that are considered both relevant and diverse representations of the information need.
+\\\\
+We suggest a cluster based approach for the visual run and a textual run based on semantic similarity.
+The third run focuses on hierarchical clustering of relevant photos and represents a combination of the purely visual and textual techniques.
+In the next sections, we will discuss these approaches in more detail.
+
+\section{Visual Run}
+% Visual run makes use of clustering techniques to increase diversity.
+\section{Textual Run}
+The textual run solely makes use of information derived from tags and other textual metadata.
+This approach aims to diversify the results by reranking the images retrieved from Flickr based on textual relevance and semantic similarity.
+Our solution is based on \cite{textual-diversification} and makes use of an adapted performance metric that takes into account both relevance and diversity to evaluate a ranking.
+Images for a query can then be ordered by directly optimizing the performance metric.
+This metric is named Average Diverse Precision (ADP) and is derived from the conventional Average Precision metric by adding a diversity component.
+We refer to \cite{textual-diversification} for a comprehensive overview.
+\\\\
+Optimizing the expected value of the ADP measurment is a permutation problem of complexity $O(n!)$. 
+Therefore a greedy approach that optimizes an estimation of the ADP measurement is implemented. 
+Denote by $\pmb\uptau$ an ordering of the images, and let $\uptau(i)$ be the image at the position of rank $i$ (a lower number indicates image with a higher rank).
+With the top $ i - 1 $ documents established, we can derive that the $i$th image should be decided as follows
+\begin{equation}
+ \displaystyle
+  \uptau(i) = \text{arg max}_{x \in \mathscr{D} - \mathscr{S} } \frac{Rel(x)}{i} Div(x) ( C + Div(x) ),
+\end{equation}
+where
+\begin{equation}
+\mathscr{S} = \left\{\uptau(1), \uptau(2), \ldots , \uptau(i - 1)\right\} ,
+\end{equation}
+\begin{equation}
+C = \sum^{i-1}_{k=1} Rel(\uptau(k)) Div(\uptau(k)).
+\end{equation}
+Where $Rel(x)$ and $Div(x)$ respectively denote the estimated relevance and diversity of the image.
+
+% $$
+% ADP(\pmb \uptau,\mathscr{D}) \stackrel{\Delta}{=}   \frac{1}{R}  \sum^{n}_{j=1}  y\left(\uptau(j)\right) Div\left(\uptau(j)\right)  \left(  \frac{\sum^j_{k=1} y\left(\uptau(k)\right) Div\left(\uptau(k)\right)}{j}  \right)
+% $$
+%
+% The binary relevancy of image $x_i$ with respect to the given query can be denoted as $y(x)$ , i.e. $y(x) = 1$ if $x$ is relevant and otherwise $y(x) = 0$.
+% $Div(\uptau(k))$ indicates the diversity score of $\uptau(k)$. Furthermore we define $R$ as being the number of true relevant images in the set of images $\mathscr{D}$, and $n$ the size of the ranking.
+
+
+
+\subsection{Relevance Estimation}
+We try to measure the relevancy of an image related to a certain monument.
+In order to achieve this we make use of the textual metadata such as number of views, number of comments and social tags.
+The task provides this data together with three textual features: TF--IDF, Social TF--IDF and probabilistic model.
+We suggest a linear combination of all gathered data.
+$$
+Rel(x) = \alpha \times tags_x + \beta \times views_x + \gamma \times comments_x,
+$$
+where
+$$
+tags_x = \frac{1}{|\mathscr{T}_x|} \left( \sum_{t \in \mathscr{T}_x} a\times prob_{t,x} + b\times tfidf_{t,x} + c\times stfidf_{t,x}\right), 
+$$
+is also a linear combination of above described features.
+We found that the precision of image orderings, which are purely based on relevance information, can be maximized by setting parameters $a$ and$\gamma$ to be zero and increasing the influence of tags and views.
+Thus, implicating that the number of comments and probabilistic model information do not add extra information to the relevance estimation of an image.
+% Defining $b = 0.7$, $c = 0.3$ and $\alpha = 0.6$, $\beta = 0.4$ maximizes the precision on the development set.
+
+\subsection{Diversity Estimation}
+Diversity of an image is defined as the minimal difference with the other images in the ranking.
+$$Div(x) = min_{i \in \{1,\ldots,n\}}\left( 1 - s(x, \uptau(i))\right)$$
+While difference between two images is defined by subtracting a similarity measure from one. 
+We take into account 
+
+\section{Visual and Textual Run}
+
+
+\section{Experiments}
+
+
+\section{Conclusions}
+
+
+%
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{abbrv}
+\bibliography{mediaeval}  % sigproc.bib is the name of the Bibliography in this case
+
+
+\end{document}
