@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.9.4)  19 SEP 2013 13:37
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.9.4)  19 SEP 2013 17:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -450,22 +450,22 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--82
+Underfull \hbox (badness 10000) in paragraph at lines 66--81
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--82
+Underfull \hbox (badness 10000) in paragraph at lines 66--81
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--97
+Underfull \hbox (badness 10000) in paragraph at lines 85--96
 
  []
 
 
-Overfull \hbox (13.77351pt too wide) detected at line 130
+Overfull \hbox (13.77351pt too wide) detected at line 129
 \OML/cmm/m/it/9 tags[] \OT1/cmr/m/n/9 = [] [] \OML/cmm/m/it/9 ;
  []
 
@@ -473,22 +473,22 @@ Overfull \hbox (13.77351pt too wide) detected at line 130
 
 
 ] (./mediaeval.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 160.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 158.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.160 \end{document}
+l.158 \end{document}
                      [2
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 160.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 158.
  (./mediaeval.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 160.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 160.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 158.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 158.
 Package rerunfilecheck Info: File `mediaeval.out' has not changed.
 (rerunfilecheck)             Checksum: A5616EC99612A1FB8C23C4970BF8BC0B;470.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 160.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 158.
  ) 
 Here is how much of TeX's memory you used:
  6358 strings out of 495004
@@ -513,7 +513,7 @@ live/texmf-dist/fonts/type1/public/rsfs/rsfs5.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on mediaeval.pdf (2 pages, 156161 bytes).
+Output written on mediaeval.pdf (2 pages, 156222 bytes).
 PDF statistics:
  133 PDF objects out of 1000 (max. 8388607)
  111 compressed objects within 2 object streams

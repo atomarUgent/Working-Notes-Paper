@@ -135,8 +135,8 @@ Thus, implicating that the number of comments and probabilistic model informatio
 \subsection{Diversity Estimation}
 Diversity of an image is defined as the minimal difference with the other images in the ranking.
 $$Div(x) = min_{i \in \{1,\ldots,n\}}\left( 1 - s(x, \uptau(i))\right)$$
-While difference between two images is defined by subtracting a similarity measure from one. 
-We take into account 
+We use a semantic similarity based on google distance \cite{google-distance} to assess the difference between two images.
+
 
 \section{Visual and Textual Run}
 
