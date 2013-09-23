@@ -90,7 +90,7 @@ Rik Van de Walle$^1$\\
 \sharedaffiliation{\affaddr $^2$~Image and Video Systems Lab, KAIST, Daejeon, South Korea}\\ 
 }
 \maketitle
-\begin{abstract}
+  \begin{abstract}
 In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr based ranked set of social images.
 Three different approaches are developed using respectively only visual data, textual data and a combination of both.
 We notice that the combined method gives the overall best results by focusing on textual information for the estimation of relevancy and visual features for assessing the diversity among them.
@@ -106,7 +106,7 @@ Hierarchical clustering on highly relevant images followed by complementing the 
 % \keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
 
 \section{Introduction}
-In this paper, we describe our approach for tackling the MediaEval 2013 Retrieving Diverse Social Images Task \cite{mediaeval-diversephotos}.
+In this paper, we describe our approach for tackling the MediaEval 2013 Retrieving Diverse Social Images Task \cite{wn-overview-paper} \cite{mediaeval-diversephotos}.
 This task focuses on result diversification in the context of social image retrieval. 
 The goal is to retrieve not only representative but also diverse images that depict the information need in a complete manner.
 The requirements of this task are to provide three runs on the test set, respectively focusing on solely visual features, textual features and a combination of both to perform a refinement of the Flickr ranking.
@@ -117,6 +117,51 @@ In the next sections, we will discuss these approaches in more detail.
 
 \section{Visual Run}
 \label{visual-similarity}
+
+Visual run is based on the features extracted visual content of the image. We make use of Global Color Naming Histogram (CN) \cite{cn-paper} and Global Histogram of Oriented Gradients (HOG) \cite{hog-paper}. 
+These features for every image in the are provided with the develpment set (DEVSET). The runs are location specific. 
+Hence, the procedure described below is applied on the collection of images for every location (total 25) provided in the development set.
+\subsection{Data Preparation}
+The CN feature vector maps the colors present in the image to 11 universal color names \cite{wn-overview-paper} . 
+Thus for every image a CN feature vector has 11 values. The HOG feature vector has 81 feature values which were obtained from 9 histograms with 9 bins for every image \cite{wn-overview-paper}.
+For every image for one particular location, the two feature vectors are concatenated resulting in a 92 values long feature vector for a single image.
+\\\\
+The image feature vector is standardized and normalized. For standardization, mean and standard deviation are calculated as follows:
+\begin{equation}
+ meanFormula
+\end{equation}
+
+\begin{equation}
+ stdFormula
+\end{equation}
+
+The image feature vector is then standardized as:
+\begin{equation}
+ (feature-mean)/std
+\end{equation}
+
+and normalized as:
+\begin{equation}
+ (feature-min)/(max-min)
+\end{equation}
+
+The image feature vector is now ready for further processing.
+\subsection{Clustering based ranking and diversification}
+We propose a hierarchical clustering based approach for the ranking of images in accordance with their relevance and diversity for a specific location. 
+This method tries to tackle the problem of relevance and diversification as a single problem instead of two different problems. 
+The proposed method tries to produce a ranking on a set of $s$ images. The exact procedure is given as follows:
+\begin{itemize}
+ \item The set of $s$ images is hierarchically clustered to produce $n$ number of clusters. The ditance between the clusters is calculated as the distance between the farthest apart elements of the two clusters.
+ Similarity between two images is calculted by using the Gaussian kernel method as described below:
+ \begin{equation}\label{gaussian-similarity}
+  gausianKernelMethod
+ \end{equation}
+ \item Next, we calculate
+
+\end{itemize}
+
+
+
 
 % Visual run makes use of clustering techniques to increase diversity.
 \section{Textual Run}
@@ -205,7 +250,7 @@ We use textual data to estimate the relevancy of an image while visual data is u
 Next, we give a brief overview of the implemented algorithm.
 \subsection{Overview}
 To estimate the relevancy of an image we use the textual based method (cf. Section \ref{text-relevance}).
-Similarity between images is based on visual image features and a gaussian kernel method to measure the difference between two image vectors (cf. Section \ref{visual-similarity}).
+Similarity between images is based on visual image features and a gaussian kernel method to measure the difference between two image vectors (cf. Section \ref{visual-similarity} equation \ref{gaussian-similarity}).
 In order to provide both a relevant and diverse ordering we make use of hierarchical clustering techniques.
 Assume we want to refine a set of $m$ images retrieved from flickr to a ranking of size $n$.
 \begin{itemize}
