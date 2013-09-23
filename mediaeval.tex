@@ -58,7 +58,7 @@
 \begin{document}
 \conferenceinfo{\textit{MediaEval 2013 Workshop,}}{October 18-19, 2013, Barcelona, Spain} 
 
-\title{Ghent University-iMinds at MediaEval 2013 Diverse Images: Hierarchical Clustering\ldots}
+\title{Ghent University-iMinds at MediaEval 2013 Diverse Images: Relevance Based Hierarchical Clustering}
 
 \numberofauthors{5} 
 \author{
@@ -91,7 +91,10 @@ Rik Van de Walle$^1$\\
 }
 \maketitle
 \begin{abstract}
-In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr based ranked set of social images\ldots
+In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr based ranked set of social images.
+Three different approaches are developed using respectively only visual data, textual data and a combination of both.
+We notice that the combined method gives the overall best results by focusing on textual information for the estimation of relevancy and visual features for assessing the diversity among them.
+Hierarchical clustering on highly relevant images followed by complementing the ordering on a greedy way forms the basis of our method.
 \end{abstract}
 % % A category with the (minimum) three required fields
 % \category{H.4}{Information Systems Applications}{Miscellaneous}
@@ -104,16 +107,9 @@ In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social
 
 \section{Introduction}
 In this paper, we describe our approach for tackling the MediaEval 2013 Retrieving Diverse Social Images Task \cite{mediaeval-diversephotos}.
-This task focuses on result diversification in the context of social photo retrieval. 
-A modern retrieval system focuses almost exclusively on the accuracy of the results related to a certain information need. 
-These retrieval systems often result in very relevant but also very similar images.
-This task aims at improving the retrieval technology linked to social images with the goal of retrieving not only representative but also diverse images depicting the information need in a complete manner.
-\\\\
-Photos of popular and less popular monuments are fetched from Flickr\footnote{www.flickr.com} (based on name and/or GPS coordinates) and ranked with its default ``relevance'' algorithm.
-Apart from a list of images, a large set of visual and textual features derived from these images are given.
-The dataset is subdivided into a development set and a test set and contains a total of 396 monuments.
+This task focuses on result diversification in the context of social image retrieval. 
+The goal is to retrieve not only representative but also diverse images that depict the information need in a complete manner.
 The requirements of this task are to provide three runs on the test set, respectively focusing on solely visual features, textual features and a combination of both to perform a refinement of the Flickr ranking.
-This refinement is a list of maximum 50 newly ranked images that are considered both relevant and diverse representations of the information need.
 \\\\
 We suggest a cluster based approach for the visual run and a textual run based on semantic similarity.
 The third run focuses on hierarchical clustering of relevant images and represents a combination of the purely visual and textual techniques.
@@ -169,7 +165,7 @@ Where $Rel(x)$ and $Div(x)$ respectively denote the estimated relevance and dive
   \bfseries Combined & \bfseries 49.8  (8.5) & \bfseries 85.6 (-0.4) & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  51.7 (5.3)  & \bfseries 74.8  (6.0)& \vrule height2.75ex depth1.25ex width 1pt  & \bfseries 41.3 & \bfseries 80.5 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  42.8  & \bfseries 66.7 \\
     \hline
   \end{tabular}
-  \label{tbl:devset}
+  \label{tbl:results}
 
   
   
@@ -216,7 +212,7 @@ Assume we want to refine a set of $m$ images retrieved from flickr to a ranking 
  \item First, $k$ images are selected with the highest estimated relevancy. $k$ is an arbitrary number that depicts a subset of the final ranking. 
  The larger $k$ becomes the more the focus will shift from relevancy to diversity. Our algorithm sets $k = 10$. Denote that $k$ is a measure for the number of images that is clustered and optimalized for diversity purposes.
 %  This step ensures that the ordering will consist mostly out of highly relevant images.
- \item Next, these $n$ images are hierarchically clustered based on a distance matrix calculated with above described visual similarity.
+ \item Next, these $k$ images are hierarchically clustered based on a distance matrix calculated with above described visual similarity.
  \item Per cluster the most relevant item is selected and added to the final ranking.
  \item Depending on the number of remaining places of the first $k$ spots in the final ranking images are greedily added based on a \textbf{gain} score.
  This score is higher for images that maximize the diversity and relevancy related to the current ranking.
@@ -228,12 +224,10 @@ Assume we want to refine a set of $m$ images retrieved from flickr to a ranking 
 
 
 \section{Experiments}
-To evaluate our methods we evaluate the created rankings of monuments in the development set based on the delivered ground truth.
+To compare our methods we evaluate the created rankings of monuments in the development set based on the delivered ground truth.
 We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
-In Table \ref{tbl:devsetgps} we can see the results of our created algorithms (three runs) compared to regular Flickr ranking.
-
-
-Table \ref{tbl:testsetnongps} shows the overall results of our algorithms on the test set. We notice the superior performance of the combined method over all other methods.
+In Table \ref{tbl:results} we can see the results of our created algorithms (three runs) compared to regular Flickr ranking and the results on the test set.
+ We notice the superior performance of the combined method over all other methods.
 
 
 

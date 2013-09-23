@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.9.4)  23 SEP 2013 10:24
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.9.4)  23 SEP 2013 11:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -791,22 +791,17 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--121
+Underfull \hbox (badness 10000) in paragraph at lines 109--117
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--121
+Underfull \hbox (badness 10000) in paragraph at lines 123--134
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--138
-
- []
-
-
-Overfull \hbox (13.77351pt too wide) detected at line 190
+Overfull \hbox (13.77351pt too wide) detected at line 186
 \OML/cmm/m/it/9 tags[] \OT1/cmr/m/n/9 = [] [] \OML/cmm/m/it/9 ;
  []
 
@@ -816,45 +811,30 @@ Overfull \hbox (13.77351pt too wide) detected at line 190
 ]
 
 LaTeX Warning: Citation `google-distance' on page \thepage  undefined on input 
-line 202.
-
-
-LaTeX Warning: Reference `tbl:devsetgps' on page \thepage  undefined on input l
-ine 233.
-
-
-LaTeX Warning: Reference `tbl:testsetnongps' on page \thepage  undefined on inp
-ut line 236.
+line 198.
 
 (./mediaeval.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 251.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 245.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.251 \end{document}
+l.245 \end{document}
                      [2]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 251.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 245.
  (./mediaeval.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 251.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 251.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 245.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 245.
 Package rerunfilecheck Info: File `mediaeval.out' has not changed.
 (rerunfilecheck)             Checksum: 0BF279E234E7140A3A773A5A4C2C979E;528.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 251.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 245.
  ) 
 Here is how much of TeX's memory you used:
- 16716 strings out of 495004
- 313891 string characters out of 3180763
- 433180 words of memory out of 3000000
- 19508 multiletter control sequences out of 15000+200000
- 55833 words of font info for 83 fonts, out of 3000000 for 9000
+ 16710 strings out of 495004
+ 313822 string characters out of 3180763
+ 432178 words of memory out of 3000000
+ 19505 multiletter control sequences out of 15000+200000
+ 55183 words of font info for 81 fonts, out of 3000000 for 9000
  54 hyphenation exceptions out of 8191
  56i,13n,69p,458b,325s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
@@ -873,10 +853,10 @@ xmf-dist/fonts/type1/public/rsfs/rsfs5.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/h
 elvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on mediaeval.pdf (2 pages, 176091 bytes).
+Output written on mediaeval.pdf (2 pages, 175429 bytes).
 PDF statistics:
- 164 PDF objects out of 1000 (max. 8388607)
- 125 compressed objects within 2 object streams
- 20 named destinations out of 1000 (max. 500000)
+ 163 PDF objects out of 1000 (max. 8388607)
+ 124 compressed objects within 2 object streams
+ 19 named destinations out of 1000 (max. 500000)
  189 words of extra memory for PDF output out of 10000 (max. 10000000)
 

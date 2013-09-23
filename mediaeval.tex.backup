@@ -58,7 +58,7 @@
 \begin{document}
 \conferenceinfo{\textit{MediaEval 2013 Workshop,}}{October 18-19, 2013, Barcelona, Spain} 
 
-\title{Ghent University-iMinds at MediaEval 2013 Diverse Images: Hierarchical Clustering\ldots}
+\title{Ghent University-iMinds at MediaEval 2013 Diverse Images: Relevance Based Hierarchical Clustering}
 
 \numberofauthors{5} 
 \author{
@@ -91,7 +91,10 @@ Rik Van de Walle$^1$\\
 }
 \maketitle
 \begin{abstract}
-In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr based ranked set of social images\ldots
+In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr based ranked set of social images.
+Three different approaches are developed using respectively only visual data, textual data and a combination of both.
+We notice that the combined method gives the overall best results by focusing on textual information for the estimation of relevancy and visual features for assessing the diversity among them.
+Hierarchical clustering on highly relevant images followed by complementing the ordering on a greedy way forms the basis of our method.
 \end{abstract}
 % % A category with the (minimum) three required fields
 % \category{H.4}{Information Systems Applications}{Miscellaneous}
@@ -157,16 +160,16 @@ Where $Rel(x)$ and $Div(x)$ respectively denote the estimated relevance and dive
 
 \begin{table*}
 \centering
-\caption{Results on development set (comparison with Flickr)}
- \begin{tabular}{r|l|ccl|ccl|ccl|c}
-    & \multicolumn{5}{c}{\bfseries Development Set (comparison with Flickr)}  & \vrule height2.75ex depth1.25ex width 1pt &  \multicolumn{5}{c}{\bfseries Test Set} \\\cline{2-12}
-    
-    & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ - GPS} & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ - GPS} \\\cline{2-12}
-    & \bfseries CR@10 &  \bfseries P@10 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries CR@10 & \bfseries P@10 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries CR@10 & \bfseries  P@10 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  CR@10 &\bfseries  P@10 \\
+\caption{Results on development set (comparison with Flickr) and test set.}
+ \begin{tabular}{|r|l|ccl|ccl|ccl|c|}
+\cline{2-12}
+   \multicolumn{1}{c|}{ } & \multicolumn{5}{c}{\bfseries Development Set (comparison with Flickr)}  & \vrule height2.75ex depth1.25ex width 1pt &  \multicolumn{5}{c|}{\bfseries Test Set} \\\cline{2-12}    
+   \multicolumn{1}{c|}{ } & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ - GPS} & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c|}{ - GPS} \\\cline{2-12}
+   \multicolumn{1}{c|}{ } &  CR@10 &   P@10 & \vrule height2.75ex depth1.25ex width 1pt &  CR@10 &  P@10 & \vrule height2.75ex depth1.25ex width 1pt &  CR@10 &   P@10 & \vrule height2.75ex depth1.25ex width 1pt &   CR@10 &  P@10 \\
    \hline
-   \bfseries Visual   & 43.6  (2.4) & 79.2 (-6.8) & \vrule height2.75ex depth1.25ex width 1pt & 48.4 (2.0)&  71.6 (2.8)& \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 76.1 & \vrule height2.75ex depth1.25ex width 1pt & 34.7 & 56.8\\\cline{2-12}
-   \bfseries Textual  &  44.2  (2.9)  & 81.6 (-4.4) & \vrule height2.75ex depth1.25ex width 1pt & 51.6 (5.2) & 67.2 (-1.6)& \vrule height2.75ex depth1.25ex width 1pt &  39.7  & 74.9 & \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 58.6\\\cline{2-12}
-   \bfseries Combined & \bfseries 49.8  (8.5) & \bfseries 85.6 (-0.4) & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  51.7 (5.3)  & \bfseries 74.8  (6.0)& \vrule height2.75ex depth1.25ex width 1pt  & \bfseries 41.3 & \bfseries 80.5 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  42.8  & \bfseries 66.7 \\
+   \bfseries Visual   & 43.6  (2.4) & 79.2 (-6.8) & \vrule height2.75ex depth1.25ex width 1pt & 48.4 (2.0)&  71.6 (2.8)& \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 76.1 & \vrule height2.75ex depth1.25ex width 1pt & 34.7 & 56.8\\\hline
+  \bfseries Textual  &  44.2  (2.9)  & 81.6 (-4.4) & \vrule height2.75ex depth1.25ex width 1pt & 51.6 (5.2) & 67.2 (-1.6)& \vrule height2.75ex depth1.25ex width 1pt &  39.7  & 74.9 & \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 58.6\\\hline
+  \bfseries Combined & \bfseries 49.8  (8.5) & \bfseries 85.6 (-0.4) & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  51.7 (5.3)  & \bfseries 74.8  (6.0)& \vrule height2.75ex depth1.25ex width 1pt  & \bfseries 41.3 & \bfseries 80.5 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  42.8  & \bfseries 66.7 \\
     \hline
   \end{tabular}
   \label{tbl:devset}
