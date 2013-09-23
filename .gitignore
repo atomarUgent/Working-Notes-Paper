@@ -1,4 +1,6 @@
 *.backup
 *.log
 *.pdf
+*.aux
+*.out
 *~
