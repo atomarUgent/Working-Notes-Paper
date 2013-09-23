@@ -118,34 +118,14 @@ In the next sections, we will discuss these approaches in more detail.
 \section{Visual Run}
 \label{visual-similarity}
 
-Visual run is based on the features extracted visual content of the image. We make use of Global Color Naming Histogram (CN) \cite{cn-paper} and Global Histogram of Oriented Gradients (HOG) \cite{hog-paper}. 
-These features for every image in the are provided with the develpment set (DEVSET). The runs are location specific. 
-Hence, the procedure described below is applied on the collection of images for every location (total 25) provided in the development set.
+Visual run is based on the features extracted from the visual content of the image. We make use of Global Color Naming Histogram (CN) \cite{cn-paper} and Global Histogram of Oriented Gradients (HOG) \cite{hog-paper}. 
+The procedure described below is location (total $25$) specific.
 \subsection{Data Preparation}
-The CN feature vector maps the colors present in the image to 11 universal color names \cite{wn-overview-paper} . 
-Thus for every image a CN feature vector has 11 values. The HOG feature vector has 81 feature values which were obtained from 9 histograms with 9 bins for every image \cite{wn-overview-paper}.
-For every image for one particular location, the two feature vectors are concatenated resulting in a 92 values long feature vector for a single image.
+The CN feature vector maps the colors present in the image to $11$ universal color names \cite{wn-overview-paper}. 
+Thus for every image a CN feature vector has $11$ values. The HOG feature vector has $81$ feature values which were obtained from $9$ histograms with $9$ bins for every image \cite{wn-overview-paper}.
+For every image for one particular location, the two feature vectors are concatenated resulting in a $92$ values long feature vector for a single image.
 \\\\
-The image feature vector is standardized and normalized. For standardization, mean and standard deviation are calculated as follows:
-\begin{equation}
- meanFormula
-\end{equation}
-
-\begin{equation}
- stdFormula
-\end{equation}
-
-The image feature vector is then standardized as:
-\begin{equation}
- (feature-mean)/std
-\end{equation}
-
-and normalized as:
-\begin{equation}
- (feature-min)/(max-min)
-\end{equation}
-
-The image feature vector is now ready for further processing.
+The image feature vector is standardized and normalized.
 \subsection{Clustering based ranking and diversification}
 We propose a hierarchical clustering based approach for the ranking of images in accordance with their relevance and diversity for a specific location. 
 This method tries to tackle the problem of relevance and diversification as a single problem instead of two different problems. 
@@ -156,14 +136,20 @@ The proposed method tries to produce a ranking on a set of $s$ images. The exact
  \begin{equation}\label{gaussian-similarity}
   gausianKernelMethod
  \end{equation}
- \item Next, we calculate
+ Two clusters are merged if the distance between them is less than 0.85, otherwise not.
+ \item For each of the $n$ clusters produced in the previous step, we calculate a Synthetic Representative Image (SRI). The SRI act as the indicative of all of the images within a particular cluster. 
+ SRI for a set of images is calculated by taking the mean of all the corresponding feature values for set of images. 
+ Thus for $k$ imge feature vectors of length $92$ in a cluster the SRI for cluster is a single vector of length $92$. Intra-cluster ranking of all of the $k$ images is produced by calculating their Euclidean distance from SRI.
+ The image with rank 0 (topmost rank) is closest to the SRI for the cluster.
+ \item An SRI from all of the $n$ SRIs obtained in the previous step is calculated. Lets call it SriSri. This is an indicative of the whole of the dataset for a particular location. 
+ The $n$ clusters obtained in the first step are ranked according to the Euclidean distance between corresponding SRI of the cluster and SriSri.
+ \item Final ranking on the images is produced as the combination of the cluster ranking and image ranking within each cluster. For every image $img_{i,j}$, 
+ where $i$ is the rank of the cluster to which the image is associated and $j$ is the rank of the image within that cluster, images are ranked as: 
+ $img_{0,0}$, $img_{1,0}$, $img_{2,0}$, ..., $img_{n,0}$, $img_{0,1}$, $img_{1,1}$, $img_{2,1}$, ..., $img_{n,1}$, ..., $img_{0,k}$, $img_{1,k}$, $img_{2,k}$, ..., $img_{n,k}$.
 
 \end{itemize}
+By treating the relevance and diversification problems as a single problem, this method intrinsically tries to balance the two aspects of the problem.
 
-
-
-
-% Visual run makes use of clustering techniques to increase diversity.
 \section{Textual Run}
 The textual run solely makes use of information derived from tags and other textual metadata.
 This approach aims to diversify the results by reranking the images retrieved from Flickr based on textual relevance and semantic similarity.
