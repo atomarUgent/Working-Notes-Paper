@@ -93,8 +93,8 @@ Rik Van de Walle$^1$\\
   \begin{abstract}
 In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr based ranked set of social images.
 Three different approaches are developed using respectively only visual data, textual data and a combination of both.
-We notice that the combined method gives the overall best results by focusing on textual information for the estimation of relevancy and visual features for assessing the diversity among them.
-Hierarchical clustering on highly relevant images followed by complementing the ordering on a greedy way forms the basis of our method.
+% We notice that the combined method gives the overall best results by focusing on textual information for the estimation of relevancy and visual features for assessing the diversity among them.
+Hierarchical clustering on highly relevant images followed by a greedy approach to complement the ranking forms the basis of our method.
 \end{abstract}
 % % A category with the (minimum) three required fields
 % \category{H.4}{Information Systems Applications}{Miscellaneous}
@@ -106,7 +106,7 @@ Hierarchical clustering on highly relevant images followed by complementing the 
 % \keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
 
 \section{Introduction}
-In this paper, we describe our approach for tackling the MediaEval 2013 Retrieving Diverse Social Images Task \cite{wn-overview-paper} \cite{mediaeval-diversephotos}.
+In this paper, we describe our approach for tackling the MediaEval 2013 Retrieving Diverse Social Images Task \cite{mediaeval-diversephotos}.
 This task focuses on result diversification in the context of social image retrieval. 
 The goal is to retrieve not only representative but also diverse images that depict the information need in a complete manner.
 The requirements of this task are to provide three runs on the test set, respectively focusing on solely visual features, textual features and a combination of both to perform a refinement of the Flickr ranking.
@@ -161,13 +161,11 @@ The proposed method tries to produce a ranking on a set of $s$ images. The exact
 \end{itemize}
 
 
-
-
 % Visual run makes use of clustering techniques to increase diversity.
 \section{Textual Run}
-The textual run solely makes use of information derived from tags and other textual metadata.
+The textual run makes use of information derived from tags and other textual metadata.
 This approach aims to diversify the results by reranking the images retrieved from Flickr based on textual relevance and semantic similarity.
-Our solution is based on \cite{textual-diversification} and makes use of an adapted performance metric that takes into account both relevance and diversity to evaluate a ranking.
+Our solution is based on \cite{textual-diversification} and makes use of an adapted performance metric to improve the characteristics of a ranking.
 Images for a query can then be ordered by directly optimizing the performance metric.
 This metric is named Average Diverse Precision (ADP) and is derived from the conventional Average Precision metric by adding a diversity component.
 We refer to \cite{textual-diversification} for a comprehensive overview.
@@ -218,10 +216,10 @@ Where $Rel(x)$ and $Div(x)$ respectively denote the estimated relevance and dive
 
 \subsection{Relevance Estimation}
 \label{text-relevance}
-We try to measure the relevancy of an image related to a certain monument.
+We try to measure the relevancy of an image related to a certain information need.
 In order to achieve this we make use of the textual metadata such as number of views, number of comments and social tags.
 The task provides this data together with three textual features: TF--IDF, Social TF--IDF and probabilistic model.
-We suggest a linear combination of all gathered and normalized data.
+We suggest a linear combination of this normalized data.
 $$
 Rel(x) = \alpha \times tags_x + \beta \times views_x + \gamma \times comments_x,
 $$
@@ -229,8 +227,9 @@ where
 $$
 tags_x = \frac{1}{|\mathscr{T}_x|} \left( \sum_{t \in \mathscr{T}_x} a\times prob_{t,x} + b\times tfidf_{t,x} + c\times stfidf_{t,x}\right), 
 $$
+with $\mathscr{T}_x$ the set of tags linked to image $x$,
 is also a linear combination of above described features.
-We found that the precision of image orderings, which are purely based on relevance information, can be maximized by setting parameters $a$ and$\gamma$ to be zero and increasing the influence of tags and views.
+We found that the precision of image orderings, which are purely based on relevance information, can be maximized by setting parameters $a$ and$\gamma$ to zero and increasing the influence of 'tag' and 'views' information.
 Thus, implicating that the number of comments and probabilistic model information do not add extra information to the relevance estimation of an image.
 % Defining $b = 0.7$, $c = 0.3$ and $\alpha = 0.6$, $\beta = 0.4$ maximizes the precision on the development set.
 
@@ -250,7 +249,7 @@ We use textual data to estimate the relevancy of an image while visual data is u
 Next, we give a brief overview of the implemented algorithm.
 \subsection{Overview}
 To estimate the relevancy of an image we use the textual based method (cf. Section \ref{text-relevance}).
-Similarity between images is based on visual image features and a gaussian kernel method to measure the difference between two image vectors (cf. Section \ref{visual-similarity} equation \ref{gaussian-similarity}).
+Similarity between images is based on visual image features and a gaussian kernel method to measure the difference between two image vectors (cf. Section \ref{visual-similarity}).
 In order to provide both a relevant and diverse ordering we make use of hierarchical clustering techniques.
 Assume we want to refine a set of $m$ images retrieved from flickr to a ranking of size $n$.
 \begin{itemize}
@@ -270,14 +269,15 @@ Assume we want to refine a set of $m$ images retrieved from flickr to a ranking 
 
 \section{Experiments}
 To compare our methods we evaluate the created rankings of monuments in the development set based on the delivered ground truth.
-We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
+% We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
 In Table \ref{tbl:results} we can see the results of our created algorithms (three runs) compared to regular Flickr ranking and the results on the test set.
  We notice the superior performance of the combined method over all other methods.
 
 
 
 \section{Conclusions}
-
+We observe that the combined method outperforms all others.
+For future work we plan to incorporate tag refinement to enhance relevancy and diversity estimations.
 
 %
 % The following two commands are all you need in the
@@ -288,3 +288,4 @@ In Table \ref{tbl:results} we can see the results of our created algorithms (thr
 
 
 \end{document}
+
