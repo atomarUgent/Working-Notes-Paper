@@ -5,6 +5,7 @@
 \usepackage{upgreek}
 \usepackage{bm}
 
+
 \newcommand{\footremember}[2]{%
    \footnote{#2}
     \newcounter{#1}
@@ -154,7 +155,25 @@ Where $Rel(x)$ and $Div(x)$ respectively denote the estimated relevance and dive
 % The binary relevancy of image $x_i$ with respect to the given query can be denoted as $y(x)$ , i.e. $y(x) = 1$ if $x$ is relevant and otherwise $y(x) = 0$.
 % $Div(\uptau(k))$ indicates the diversity score of $\uptau(k)$. Furthermore we define $R$ as being the number of true relevant images in the set of images $\mathscr{D}$, and $n$ the size of the ranking.
 
+\begin{table*}
+\centering
+\caption{Results on development set (comparison with Flickr)}
+ \begin{tabular}{r|l|ccl|ccl|ccl|c}
+    & \multicolumn{5}{c}{\bfseries Development Set (comparison with Flickr)}  & \vrule height2.75ex depth1.25ex width 1pt &  \multicolumn{5}{c}{\bfseries Test Set} \\\cline{2-12}
+    
+    & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ - GPS} & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ - GPS} \\\cline{2-12}
+    & \bfseries CR@10 &  \bfseries P@10 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries CR@10 & \bfseries P@10 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries CR@10 & \bfseries  P@10 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  CR@10 &\bfseries  P@10 \\
+   \hline
+   \bfseries Visual   & 43.6  (2.4) & 79.2 (-6.8) & \vrule height2.75ex depth1.25ex width 1pt & 48.4 (2.0)&  71.6 (2.8)& \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 76.1 & \vrule height2.75ex depth1.25ex width 1pt & 34.7 & 56.8\\\cline{2-12}
+   \bfseries Textual  &  44.2  (2.9)  & 81.6 (-4.4) & \vrule height2.75ex depth1.25ex width 1pt & 51.6 (5.2) & 67.2 (-1.6)& \vrule height2.75ex depth1.25ex width 1pt &  39.7  & 74.9 & \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 58.6\\\cline{2-12}
+   \bfseries Combined & \bfseries 49.8  (8.5) & \bfseries 85.6 (-0.4) & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  51.7 (5.3)  & \bfseries 74.8  (6.0)& \vrule height2.75ex depth1.25ex width 1pt  & \bfseries 41.3 & \bfseries 80.5 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  42.8  & \bfseries 66.7 \\
+    \hline
+  \end{tabular}
+  \label{tbl:devset}
 
+  
+  
+\end{table*} 
 
 \subsection{Relevance Estimation}
 \label{text-relevance}
@@ -173,6 +192,9 @@ is also a linear combination of above described features.
 We found that the precision of image orderings, which are purely based on relevance information, can be maximized by setting parameters $a$ and$\gamma$ to be zero and increasing the influence of tags and views.
 Thus, implicating that the number of comments and probabilistic model information do not add extra information to the relevance estimation of an image.
 % Defining $b = 0.7$, $c = 0.3$ and $\alpha = 0.6$, $\beta = 0.4$ maximizes the precision on the development set.
+
+
+
 
 \subsection{Diversity Estimation}
 Diversity of an image is defined as the minimal difference with the other images in the ranking.
@@ -209,22 +231,6 @@ Assume we want to refine a set of $m$ images retrieved from flickr to a ranking 
 To evaluate our methods we evaluate the created rankings of monuments in the development set based on the delivered ground truth.
 We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
 In Table \ref{tbl:devsetgps} we can see the results of our created algorithms (three runs) compared to regular Flickr ranking.
-\begin{table}[ht]
-\centering
-\caption{Results on development set (comparison with Flickr)}
- \begin{tabular}{r|lcclc}
-    & \multicolumn{2}{c}{\bfseries + GPS}  & \vrule height2.75ex depth1.25ex width 1pt &  \multicolumn{2}{c}{\bfseries - GPS} \\\cline{2-6}
-    
-    & \bfseries CR@10 & \bfseries P@10 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries CR@10 & \bfseries P@10 \\
-   \hline
-   \bfseries Visual   & 43.58  (+2.4) & 79.2 (-6.8) & \vrule height2.75ex depth1.25ex width 1pt & 48.35 (+2.0)&  71.6 (+2.8)\\
-   \bfseries Textual  & 10 () & 10 () & \vrule height2.75ex depth1.25ex width 1pt & 51.58 (+5.2) & 67.2 (-1.6)\\
-   \bfseries Combined & 10 () & 10 () & \vrule height2.75ex depth1.25ex width 1pt & &\\
-  \end{tabular}
-  \label{tbl:devset}
-
-\end{table}
- 
 
 
 Table \ref{tbl:testsetnongps} shows the overall results of our algorithms on the test set. We notice the superior performance of the combined method over all other methods.
