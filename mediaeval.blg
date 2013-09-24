@@ -3,44 +3,46 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: mediaeval.aux
 The style file: abbrv.bst
 Database file #1: mediaeval.bib
-You've used 2 entries,
+Warning--empty journal in representativeness
+You've used 4 entries,
             2118 wiz_defined-function locations,
-            513 strings with 4055 characters,
-and the built_in function-call counts, 761 in all, are:
-= -- 70
-> -- 41
+            523 strings with 4542 characters,
+and the built_in function-call counts, 1401 in all, are:
+= -- 126
+> -- 87
 < -- 0
-+ -- 16
-- -- 14
-* -- 68
-:= -- 135
-add.period$ -- 6
-call.type$ -- 2
-change.case$ -- 13
++ -- 35
+- -- 30
+* -- 111
+:= -- 250
+add.period$ -- 12
+call.type$ -- 4
+change.case$ -- 27
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 22
-empty$ -- 55
-format.name$ -- 14
-if$ -- 152
+cite$ -- 5
+duplicate$ -- 46
+empty$ -- 98
+format.name$ -- 30
+if$ -- 279
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 2
-newline$ -- 13
-num.names$ -- 4
-pop$ -- 9
+int.to.str$ -- 4
+missing$ -- 4
+newline$ -- 23
+num.names$ -- 8
+pop$ -- 29
 preamble$ -- 1
-purify$ -- 11
+purify$ -- 23
 quote$ -- 0
-skip$ -- 14
+skip$ -- 27
 stack$ -- 0
-substring$ -- 52
-swap$ -- 2
+substring$ -- 63
+swap$ -- 3
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 8
-warning$ -- 0
-while$ -- 6
-width$ -- 3
-write$ -- 24
+type$ -- 16
+warning$ -- 1
+while$ -- 10
+width$ -- 5
+write$ -- 44
+(There was 1 warning)

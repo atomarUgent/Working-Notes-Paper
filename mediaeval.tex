@@ -58,7 +58,7 @@
 \begin{document}
 \conferenceinfo{\textit{MediaEval 2013 Workshop,}}{October 18-19, 2013, Barcelona, Spain} 
 
-\title{Ghent University-iMinds at MediaEval 2013 Diverse Images: Relevance Based Hierarchical Clustering}
+\title{Ghent University-iMinds at MediaEval 2013 Diverse Images: Relevance-Based Hierarchical Clustering}
 
 \numberofauthors{5} 
 \author{
@@ -90,11 +90,11 @@ Rik Van de Walle$^1$\\
 \sharedaffiliation{\affaddr $^2$~Image and Video Systems Lab, KAIST, Daejeon, South Korea}\\ 
 }
 \maketitle
-  \begin{abstract}
-In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr based ranked set of social images.
-Three different approaches are developed using respectively only visual data, textual data and a combination of both.
+\begin{abstract}
+In this paper, we attempt to tackle the MediaEval 2013 Retrieving Diverse Social Images challenge, which is a filter and refinement problem on a Flickr-based ranked set of social images.
+We developed three different approaches, using visual data, textual data and a combination thereof, respectively.
 % We notice that the combined method gives the overall best results by focusing on textual information for the estimation of relevancy and visual features for assessing the diversity among them.
-Hierarchical clustering on highly relevant images followed by a greedy approach to complement the ranking forms the basis of our method.
+Hierarchical clustering on highly relevant images, combined with a greedy approach to complement the ranking, forms the basis of our approach.
 \end{abstract}
 % % A category with the (minimum) three required fields
 % \category{H.4}{Information Systems Applications}{Miscellaneous}
@@ -110,45 +110,30 @@ In this paper, we describe our approach for tackling the MediaEval 2013 Retrievi
 This task focuses on result diversification in the context of social image retrieval. 
 The goal is to retrieve not only representative but also diverse images that depict the information need in a complete manner.
 The requirements of this task are to provide three runs on the test set, respectively focusing on solely visual features, textual features and a combination of both to perform a refinement of the Flickr ranking.
-\\\\
-We suggest a cluster based approach for the visual run and a textual run based on semantic similarity.
+
+We suggest a cluster-based approach for the visual run and a semantic similarity-based approach for the textual run.
 The third run focuses on hierarchical clustering of relevant images and represents a combination of the purely visual and textual techniques.
 In the next sections, we will discuss these approaches in more detail.
 
 \section{Visual Run}
 \label{visual-similarity}
-
-Visual run is based on the features extracted from the visual content of the image. We make use of Global Color Naming Histogram (CN) \cite{cn-paper} and Global Histogram of Oriented Gradients (HOG) \cite{hog-paper}. 
-The procedure described below is location (total $25$) specific.
-\subsection{Data Preparation}
-The CN feature vector maps the colors present in the image to $11$ universal color names \cite{wn-overview-paper}. 
-Thus for every image a CN feature vector has $11$ values. The HOG feature vector has $81$ feature values which were obtained from $9$ histograms with $9$ bins for every image \cite{wn-overview-paper}.
-For every image for one particular location, the two feature vectors are concatenated resulting in a $92$ values long feature vector for a single image.
-\\\\
-The image feature vector is standardized and normalized.
-\subsection{Clustering based ranking and diversification}
-We propose a hierarchical clustering based approach for the ranking of images in accordance with their relevance and diversity for a specific location. 
-This method tries to tackle the problem of relevance and diversification as a single problem instead of two different problems. 
-The proposed method tries to produce a ranking on a set of $s$ images. The exact procedure is given as follows:
+We propose a hierarchical clustering-based approach for the ranking of images in accordance with their relevance and diversity for a specific location \cite{representativeness}. 
+% This method tries to tackle the problem of relevance and diversification as a single problem instead of two different problems. 
+Assume we want to refine a set of $m$ images retrieved from Flickr to a ranking of size $n$.
 \begin{itemize}
- \item The set of $s$ images is hierarchically clustered to produce $n$ number of clusters. The ditance between the clusters is calculated as the distance between the farthest apart elements of the two clusters.
- Similarity between two images is calculted by using the Gaussian kernel method as described below:
- \begin{equation}\label{gaussian-similarity}
-  gausianKernelMethod
+ \item The set of $m$ images is hierarchically clustered to produce $k$ clusters. Similarity between two images $x_i$ and $x_j$ is based on a Gaussian kernel:
+ \begin{equation}
+ \label{gaussian-similarity}
+s(x_i, x_j) = exp\left(-\frac{||x_i - x_j||_2^2}{\sigma^2}\right).
  \end{equation}
- Two clusters are merged if the distance between them is less than 0.85, otherwise not.
- \item For each of the $n$ clusters produced in the previous step, we calculate a Synthetic Representative Image (SRI). The SRI act as the indicative of all of the images within a particular cluster. 
- SRI for a set of images is calculated by taking the mean of all the corresponding feature values for set of images. 
- Thus for $k$ imge feature vectors of length $92$ in a cluster the SRI for cluster is a single vector of length $92$. Intra-cluster ranking of all of the $k$ images is produced by calculating their Euclidean distance from SRI.
- The image with rank 0 (topmost rank) is closest to the SRI for the cluster.
- \item An SRI from all of the $n$ SRIs obtained in the previous step is calculated. Lets call it SriSri. This is an indicative of the whole of the dataset for a particular location. 
- The $n$ clusters obtained in the first step are ranked according to the Euclidean distance between corresponding SRI of the cluster and SriSri.
- \item Final ranking on the images is produced as the combination of the cluster ranking and image ranking within each cluster. For every image $img_{i,j}$, 
- where $i$ is the rank of the cluster to which the image is associated and $j$ is the rank of the image within that cluster, images are ranked as: 
- $img_{0,0}$, $img_{1,0}$, $img_{2,0}$, ..., $img_{n,0}$, $img_{0,1}$, $img_{1,1}$, $img_{2,1}$, ..., $img_{n,1}$, ..., $img_{0,k}$, $img_{1,k}$, $img_{2,k}$, ..., $img_{n,k}$.
-
+ \item For each of the $k$ clusters produced, we calculate a Synthetic Representative Image (SRI).
+The SRI acts as a representative image for all the images within a particular cluster. 
+The SRI for a set of images is calculated by taking the mean of all the corresponding feature vectors of these images. 
+Intra-cluster ranking of all of the $k$ images is produced by calculating their Euclidean distance to the SRI.
+The image with rank 1 (topmost rank) is closest to the SRI for the cluster.
+\item Subsequently, we rank the $k$ different clusters by subtracting the cluster SRIs from a general SRI value, which is the mean over all cluster SRIs. 
+Final ranking on the images is produced as the combination of the cluster ranking and image ranking within each cluster. 
 \end{itemize}
-By treating the relevance and diversification problems as a single problem, this method intrinsically tries to balance the two aspects of the problem.
 
 \section{Textual Run}
 The textual run makes use of information derived from tags and other textual metadata.
@@ -157,9 +142,9 @@ Our solution is based on \cite{textual-diversification} and makes use of an adap
 Images for a query can then be ordered by directly optimizing the performance metric.
 This metric is named Average Diverse Precision (ADP) and is derived from the conventional Average Precision metric by adding a diversity component.
 We refer to \cite{textual-diversification} for a comprehensive overview.
-\\\\
-Optimizing the expected value of the ADP measurment is a permutation problem of complexity $O(n!)$. 
-Therefore a greedy approach that optimizes an estimation of the ADP measurement is implemented. 
+
+% Optimizing the expected value of the ADP measurment is a permutation problem of complexity $O(n!)$. 
+A greedy approach that optimizes an estimation of the ADP measurement is implemented. 
 Denote by $\pmb\uptau$ an ordering of the images, and let $\uptau(i)$ be the image at the position of rank $i$ (a lower number indicates image with a higher rank).
 With the top $ i - 1 $ documents established, we can derive that the $i$th image should be decided as follows
 \begin{equation}
@@ -204,8 +189,8 @@ Where $Rel(x)$ and $Div(x)$ respectively denote the estimated relevance and dive
 
 \subsection{Relevance Estimation}
 \label{text-relevance}
-We try to measure the relevancy of an image related to a certain information need.
-In order to achieve this we make use of the textual metadata such as number of views, number of comments and social tags.
+% We try to measure the relevancy of an image related to a certain information need.
+We estimate the relevancy of an image by making use of textual metadata (number of views, number of comments) and social tags.
 The task provides this data together with three textual features: TF--IDF, Social TF--IDF and probabilistic model.
 We suggest a linear combination of this normalized data.
 $$
@@ -215,10 +200,10 @@ where
 $$
 tags_x = \frac{1}{|\mathscr{T}_x|} \left( \sum_{t \in \mathscr{T}_x} a\times prob_{t,x} + b\times tfidf_{t,x} + c\times stfidf_{t,x}\right), 
 $$
-with $\mathscr{T}_x$ the set of tags linked to image $x$,
-is also a linear combination of above described features.
-We found that the precision of image orderings, which are purely based on relevance information, can be maximized by setting parameters $a$ and$\gamma$ to zero and increasing the influence of 'tag' and 'views' information.
-Thus, implicating that the number of comments and probabilistic model information do not add extra information to the relevance estimation of an image.
+with $\mathscr{T}_x$ the set of tags linked to image $x$.
+% is also a linear combination of above described features.
+We found that the precision of image orderings, which are purely based on relevance information, can be maximized by setting parameters $a$ and $\gamma$ to zero and increasing the impact of 'tag' and 'views' information.
+% Thus, implicating that the number of comments and probabilistic model information do not add extra information to the relevance estimation of an image.
 % Defining $b = 0.7$, $c = 0.3$ and $\alpha = 0.6$, $\beta = 0.4$ maximizes the precision on the development set.
 
 
@@ -233,16 +218,18 @@ The average of the summation of the similarities between the different tags of b
 
 \section{Visual and Textual Run}
 With the availability of both textual and visual data we can improve above methods.
-We use textual data to estimate the relevancy of an image while visual data is used for assessing the similarity.
-Next, we give a brief overview of the implemented algorithm.
-\subsection{Overview}
+% We use textual data to estimate the relevancy of an image while visual data is used for assessing the similarity.
+% Next, we give a brief overview of the implemented algorithm.
+% \subsection{Overview}
 To estimate the relevancy of an image we use the textual based method (cf. Section \ref{text-relevance}).
-Similarity between images is based on visual image features and a gaussian kernel method to measure the difference between two image vectors (cf. Section \ref{visual-similarity}).
+Similarity between images is based on visual image features and a gaussian kernel method to measure the difference between two image vectors (cf. Equation \ref{gaussian-similarity}).
 In order to provide both a relevant and diverse ordering we make use of hierarchical clustering techniques.
-Assume we want to refine a set of $m$ images retrieved from flickr to a ranking of size $n$.
+Again, assume we want to refine a set of $m$ images retrieved from Flickr to a ranking of size $n$.
 \begin{itemize}
  \item First, $k$ images are selected with the highest estimated relevancy. $k$ is an arbitrary number that depicts a subset of the final ranking. 
- The larger $k$ becomes the more the focus will shift from relevancy to diversity. Our algorithm sets $k = 10$. Denote that $k$ is a measure for the number of images that is clustered and optimalized for diversity purposes.
+The larger $k$ becomes the more the focus will shift from relevancy to diversity. 
+Our algorithm sets $k = 10$. 
+%  Denote that $k$ is a measure for the number of images that is clustered and optimalized for diversity purposes.
 %  This step ensures that the ordering will consist mostly out of highly relevant images.
  \item Next, these $k$ images are hierarchically clustered based on a distance matrix calculated with above described visual similarity.
  \item Per cluster the most relevant item is selected and added to the final ranking.
@@ -259,13 +246,15 @@ Assume we want to refine a set of $m$ images retrieved from flickr to a ranking 
 To compare our methods we evaluate the created rankings of monuments in the development set based on the delivered ground truth.
 % We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
 In Table \ref{tbl:results} we can see the results of our created algorithms (three runs) compared to regular Flickr ranking and the results on the test set.
- We notice the superior performance of the combined method over all other methods.
-
-
+We notice the superior performance of the combined method over all other methods. 
+Image sets retrieved based on GPS data have by default a high precision and are harder to improve in that area. 
+%  When not using GPS data to retrieve images linked to a certain monument results are more scattered resulting in a 'accidental' higher cluster recall.   
 
 \section{Conclusions}
-We observe that the combined method outperforms all others.
-For future work we plan to incorporate tag refinement to enhance relevancy and diversity estimations.
+We observe that a method clustering images focused on high relevancy outperforms all others.
+This includes using both textual data for the relevancy estimation as visual features for the diversity assessment.
+% Retrieving both diverse and relevant images involves the accurate ana
+For future work we plan to incorporate tag refinement to enhance the relevancy estimation and incorporate textual data in the diversity estimation.
 
 %
 % The following two commands are all you need in the

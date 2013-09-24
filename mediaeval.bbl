@@ -1,9 +1,24 @@
 \begin{thebibliography}{1}
 
+\bibitem{representativeness}
+R.~Anca-Livia, J.~St{\"o}ttinger, B.~Ionescu, M.~Men{\'e}ndez, and
+  F.~Giunchiglia.
+\newblock Representativeness and diversity in photos via crowd-sourced media
+  analysis.
+\newblock 2012.
+
+\bibitem{google-distance}
+R.~Cilibrasi and P.~Vitanyi.
+\newblock The google similarity distance.
+\newblock {\em Knowledge and Data Engineering, IEEE Transactions on},
+  19(3):370--383, 2007.
+
 \bibitem{mediaeval-diversephotos}
-M.~Bowman, S.~K. Debray, and L.~L. Peterson.
-\newblock Reasoning about naming systems.
-\newblock {\em ACM Trans. Program. Lang. Syst.}, 15(5):795--825, November 1993.
+B.~Ionescu, M.~Menéndez, H.~Müller, and A.~Popescu.
+\newblock Retrieving diverse social images at mediaeval 2013: Objectives,
+  dataset and evaluation.
+\newblock In {\em MediaEval 2013 Workshop, CEUR-WS.org, ISSN: 1613-0073},
+  Barcelona, Spain, October 18-19 2013.
 
 \bibitem{textual-diversification}
 M.~Wang, K.~Yang, X.-S. Hua, and H.-J. Zhang.
