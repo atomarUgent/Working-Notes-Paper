@@ -85,7 +85,7 @@ Rik Van de Walle$^1$\\
 \and
 % \sharedaffiliation
 %       \affaddr{ \email{\texttt{\{baptist.vandersmissen, abineshwar.tomar, frederic.godin, wesley.deneve, rik.vandewalle\}@ugent.be}}}\\
-\sharedaffiliation{\affaddr $^1$~ELIS -- Multimedia Lab, Ghent University -- iMinds, Ghent, Belgium}\\
+\sharedaffiliation{\affaddr $^1$~Multimedia Lab, ELIS, Ghent University -- iMinds, Ghent, Belgium}\\
 \sharedaffiliation{\affaddr $^2$~Image and Video Systems Lab, KAIST, Daejeon, South Korea}\\ 
 }
 \maketitle
@@ -219,7 +219,7 @@ We use a semantic similarity measure based on Google distance \cite{google-dista
 The average of the summation of the similarities between the different tags of both images gives us a value that describes the semantic similarity between both images.
 
 
-\section{Visual and Textual Run}
+\section{Combined Run}
 With the availability of both textual and visual data, we can improve the above methods.
 % We use textual data to estimate the relevance of an image while visual data is used for assessing the similarity.
 % Next, we give a brief overview of the implemented algorithm.
@@ -248,11 +248,11 @@ The larger $l$ becomes, the more the focus will shift from relevance to diversit
 To compare our methods, we refine the rankings of all locations in the development set and evaluate them with the delivered ground truth.
 % We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
 In Table \ref{tbl:results}, we can see the results of our algorithms (three runs), compared to the regular Flickr ranking and the results on the test set.
-We notice that the combined method creates the most precise and diverse rankings based on both precision and cluster recall measures compared to the other developed methods (averages 42.1\% cluster recall on test set). 
+We notice that the combined method creates the most precise and diverse rankings based on both precision and cluster recall measures (averages 42.1\% cluster recall on test set). 
 % The precision of the image orderings is heavily based on the used data to retrieve images from Flickr. 
 % Results on the test set show a cluster recall of around 42\% for the best method.
-Image sets retrieved based on GPS data have by default a high precision, thus making it harder to improve in that area.
-
+% Image sets retrieved based on GPS data have by default a high precision, thus making it harder to improve in that area.
+We also observe the similarity of the visual run and the textual run in terms of effectiveness.
 %  When not using GPS data to retrieve images linked to a certain monument results are more scattered resulting in a 'accidental' higher cluster recall.   
 
 \section{Conclusions}
