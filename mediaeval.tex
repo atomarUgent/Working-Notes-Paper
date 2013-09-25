@@ -109,6 +109,7 @@ In this paper, we describe our approach for tackling the MediaEval 2013 Retrievi
 This task focuses on result diversification in the context of social image retrieval. 
 The goal is to retrieve not only representative but also diverse images that depict the information need in a complete manner.
 The requirements of this task are to provide three runs on the test set, respectively focusing on solely visual features, textual features and a combination of both to perform a refinement of the Flickr ranking.
+We refer to \cite{mediaeval-diversephotos} for a complete task overview.
 
 We suggest a cluster-based approach for the visual run and a semantic similarity-based approach for the textual run.
 The third run focuses on hierarchical clustering of relevant images and represents a combination of the purely visual and textual techniques.
@@ -120,11 +121,12 @@ We propose a hierarchical clustering-based approach for the ranking of images in
 % This method tries to tackle the problem of relevance and diversification as a single problem instead of two different problems. 
 We want to refine a set of $m$ images retrieved from Flickr to a ranking of size $n$.
 \begin{itemize}
- \item The set of $m$ images is hierarchically clustered to produce $k$ clusters. Similarity between two images $x_i$ and $x_j$ is measured using a Gaussian kernel:
+ \item The set of $m$ images is hierarchically clustered to produce $k$ clusters. Similarity between two images $x_i$ and $x_j$ (represented by a CN3x3 and LBP3x3 feature vector) is measured using a Gaussian kernel:
  \begin{equation}
  \label{gaussian-similarity}
 s(x_i, x_j) = exp\left(-\frac{||x_i - x_j||_2^2}{\sigma^2}\right).
  \end{equation}
+ 
  \item For each of the $k$ clusters produced, we calculate a Synthetic Representative Image (SRI) \cite{representativeness}.
 The SRI acts as a representative image for all the images within a particular cluster. 
 The SRI for a set of images is calculated by taking the mean of all the corresponding feature vectors of these images. 
@@ -259,7 +261,7 @@ We also observe the similarity of the visual run and the textual run in terms of
 We observe that a method clustering images focused on high relevance outperforms all others.
 This method uses textual data for the relevance estimation and visual features for the diversity assessment.
 % Retrieving both diverse and relevant images involves the accurate ana
-For future work, we plan to incorporate tag refinement in order to to enhance the relevance estimation. In addition, we plan to incorporate textual data in the diversity estimation.
+For future work, we plan to incorporate tag refinement in order to enhance the relevance estimation. In addition, we plan to incorporate textual data in the diversity estimation.
 
 %
 % The following two commands are all you need in the
