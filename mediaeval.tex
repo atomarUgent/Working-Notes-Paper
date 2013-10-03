@@ -4,7 +4,9 @@
 \usepackage{mathrsfs}
 \usepackage{upgreek}
 \usepackage{bm}
-
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
 
 \newcommand{\footremember}[2]{%
    \footnote{#2}
@@ -14,45 +16,6 @@
 \newcommand{\footrecall}[1]{%
     \footnotemark[\value{#1}]%
 } 
-
-% Tikz
-\usepackage{tikz}
-\usetikzlibrary{shadows, arrows, positioning, calc, shapes}
-
-\pgfdeclarelayer{background}
-\pgfdeclarelayer{foreground}
-\pgfsetlayers{background,main,foreground}
-
-\tikzstyle{rect} = [draw = black!50, fill = black!20, very thick, minimum width = 6em, minimum height = 3em, text centered, rounded corners, drop shadow]
-\tikzstyle{arrow} = [draw, ultra thick, black!50, -latex']
-
-
-
-\newcommand{\backgroundone}[5]{%
-	\begin{pgfonlayer}{background}
-		% Left-top corner of the background rectangle
-		\path (#1.west |- #2.north) + (-1,1) node (a1) {};
-		% Right-bottom corner of the background rectanle
-		\path (#3.east |- #4.south) + (1,-.5) node (a2) {};
-		% Draw the background
-		\path [draw=black!50, dashed, ultra thick, fill=black!10, rounded corners] (a1) rectangle (a2);
-		% Text at top of the background rectangle
-		\path let \p1 = (a1), \p2 = (a2) in node at ($(.5*\x1+.5*\x2,\y1-1em)$) [minimum width = 10em, text width = 20em, text centered] () {\bf #5};
-	\end{pgfonlayer}
-}
-
-\newcommand{\backgroundtwo}[5]{%
-	\begin{pgfonlayer}{background}
-		% Left-top corner of the background rectangle
-		\path (#1.west |- #2.north) + (-.5,.5) node (a1) {};
-		% Right-bottom corner of the background rectanle
-		\path (#3.east |- #4.south) + (2.8,-1.) node (a2) {};
-		% Draw the background
-		\path [draw=black, ultra thick, rounded corners] (a1) rectangle (a2);
-		% Text at top of the background rectangle
-		\path let \p1 = (a1), \p2 = (a2) in node at ($(.5*\x1+.5*\x2,\y1-1em)$) [minimum width = 10em, text width = 10em, text centered] () {\bf #5};
-	\end{pgfonlayer}
-}
 
 
 \begin{document}
@@ -106,34 +69,52 @@ Hierarchical clustering on highly relevant images, combined with a greedy approa
 
 \section{Introduction}
 In this paper, we describe our approach for tackling the MediaEval 2013 Retrieving Diverse Social Images Task \cite{mediaeval-diversephotos}.
-This task focuses on result diversification in the context of social image retrieval. 
-The goal is to retrieve not only representative but also diverse images that depict the information need in a complete manner.
-The requirements of this task are to provide three runs on the test set, respectively focusing on solely visual features, textual features and a combination of both to perform a refinement of the Flickr ranking.
-We refer to \cite{mediaeval-diversephotos} for a complete task overview.
+This task focuses on result diversification in the context of social image retrieval. We refer to \cite{mediaeval-diversephotos} for a complete task overview.
 
 We suggest a cluster-based approach for the visual run and a semantic similarity-based approach for the textual run.
 The third run focuses on hierarchical clustering of relevant images and represents a combination of the purely visual and textual techniques.
 In the following sections, we will discuss each of these approaches individually in more detail.
 
+
+\begin{table*}[t]
+\centering
+\caption{Results (in \%). Numbers between brackets denote the relative difference to the Flickr ranking, while CR denotes the cluster recall of the ranking.}
+ \begin{tabular}{|r|c|ccc|ccc|ccc|c|}
+\cline{2-12}
+   \multicolumn{1}{c|}{ } & \multicolumn{5}{c}{\bfseries Development Set (comparison with Flickr)}  & \vrule height2.75ex depth1.25ex width 1pt &  \multicolumn{5}{c|}{\bfseries Test Set} \\\cline{2-12}    
+   \multicolumn{1}{c|}{ } & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ - GPS} & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c|}{ - GPS} \\\cline{2-12}
+   \multicolumn{1}{c|}{ } &  \textit{CR@10} &   \textit{P@10} & \vrule height2.75ex depth1.25ex width 1pt &  \textit{CR@10} &  \textit{P@10} & \vrule height2.75ex depth1.25ex width 1pt &  \textit{CR@10} &   \textit{P@10} & \vrule height2.75ex depth1.25ex width 1pt &   \textit{CR@10} & \textit{P@10} \\
+   \hline
+   \bfseries Visual   & 43.6  (2.4) & 79.2 (-6.8) & \vrule height2.75ex depth1.25ex width 1pt & 48.4 (2.0)&  71.6 (2.8)& \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 76.1 & \vrule height2.75ex depth1.25ex width 1pt & 34.7 & 56.8\\\hline
+  \bfseries Textual  &  44.2  (2.9)  & 81.6 (-4.4) & \vrule height2.75ex depth1.25ex width 1pt & 51.6 (5.2) & 67.2 (-1.6)& \vrule height2.75ex depth1.25ex width 1pt &  39.7  & 74.9 & \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 58.6\\\hline
+  \bfseries Combined & \bfseries 49.8  (8.5) & \bfseries 85.6 (-0.4) & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  51.7 (5.3)  & \bfseries 74.8  (6.0)& \vrule height2.75ex depth1.25ex width 1pt  & \bfseries 41.3 & \bfseries 80.5 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  42.8  & \bfseries 66.7 \\
+    \hline
+  \end{tabular}
+  \label{tbl:results}  
+\end{table*} 
+
+
 \section{Visual Run}
 \label{visual-similarity}
-We propose a hierarchical clustering-based approach for the ranking of images in accordance with their relevance and diversity for a specific location \cite{representativeness}. 
+We propose a hierarchical clustering-based approach for the ranking of images in accordance with their relevance and diversity for a specific location. 
+Inter-cluster and intra-cluster ranking forms the basis of this method and is inspired by \cite{representativeness}.
 % This method tries to tackle the problem of relevance and diversification as a single problem instead of two different problems. 
 We want to refine a set of $m$ images retrieved from Flickr to a ranking of size $n$.
-\begin{itemize}
+\begin{itemize}[leftmargin=*]
  \item The set of $m$ images is hierarchically clustered to produce $k$ clusters. Similarity between two images $x_i$ and $x_j$ (represented by a CN3x3 and LBP3x3 feature vector) is measured using a Gaussian kernel:
  \begin{equation}
  \label{gaussian-similarity}
 s(x_i, x_j) = exp\left(-\frac{||x_i - x_j||_2^2}{\sigma^2}\right).
  \end{equation}
  
- \item For each of the $k$ clusters produced, we calculate a Synthetic Representative Image (SRI) \cite{representativeness}.
+ \item For each of the $k$ clusters produced, we calculate a Synthetic Representative Image (SRI). 
 The SRI acts as a representative image for all the images within a particular cluster. 
 The SRI for a set of images is calculated by taking the mean of all the corresponding feature vectors of these images. 
-Intra-cluster ranking of all of the $k$ images is produced by calculating their Euclidean distance to the SRI.
+Intra-cluster ranking of all of the $m$ images is produced by calculating their Euclidean distance to the SRI.
 The image with rank 1 (topmost rank) is closest to the SRI of the cluster.
-\item Subsequently, we rank the $k$ different clusters by subtracting the cluster SRIs from a general SRI value, which is the mean over all cluster SRIs. 
-Finally, $n$ images are selected by iteratively taking the topmost ranked image in the cluster with the highest rank. 
+\item Subsequently, we rank the $k$ different clusters, again by calculating the distance of the cluster SRIs to a general SRI value, which is the mean over all cluster SRIs. 
+Finally, $n$ images are selected by iterating over the ranked clusters and taking the topmost ranked image within this cluster. 
+
 % Final ranking on the images is produced as the combination of the cluster ranking and image ranking within each cluster. 
 \end{itemize}
 
@@ -151,7 +132,7 @@ Let $\pmb\uptau$ denote an ordering of the images, and let $\uptau(i)$ be the im
 With the top $ i - 1 $ documents established, we can derive that the $i$th image should be decided as follows:
 \begin{equation}
  \displaystyle
-  \uptau(i) = \text{arg max}_{x \in \mathscr{D} - \mathscr{S} } \frac{Rel(x)}{i} Div(x) ( C + Div(x) ),
+  \uptau(i) = \arg\max_{x \in \mathscr{D} - \mathscr{S} } \left\{ \frac{Rel(x)}{i} Div(x) ( C + Div(x) )\right\},
 \end{equation}
 where
 \begin{equation}
@@ -169,25 +150,8 @@ with $Rel(x)$ and $Div(x)$ denoting the estimated relevance and diversity of the
 % The binary relevance of image $x_i$ with respect to the given query can be denoted as $y(x)$ , i.e. $y(x) = 1$ if $x$ is relevant and otherwise $y(x) = 0$.
 % $Div(\uptau(k))$ indicates the diversity score of $\uptau(k)$. Furthermore we define $R$ as being the number of true relevant images in the set of images $\mathscr{D}$, and $n$ the size of the ranking.
 
-\begin{table*}
-\centering
-\caption{Results on development set and test set (in \%). Numbers between brackets denote the relative difference to the Flickr ranking.}
- \begin{tabular}{|r|l|ccl|ccl|ccl|c|}
-\cline{2-12}
-   \multicolumn{1}{c|}{ } & \multicolumn{5}{c}{\bfseries Development Set (comparison with Flickr)}  & \vrule height2.75ex depth1.25ex width 1pt &  \multicolumn{5}{c|}{\bfseries Test Set} \\\cline{2-12}    
-   \multicolumn{1}{c|}{ } & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ - GPS} & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ + GPS}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c|}{ - GPS} \\\cline{2-12}
-   \multicolumn{1}{c|}{ } &  \textit{CR@10} &   \textit{P@10} & \vrule height2.75ex depth1.25ex width 1pt &  \textit{CR@10} &  \textit{P@10} & \vrule height2.75ex depth1.25ex width 1pt &  \textit{CR@10} &   \textit{P@10} & \vrule height2.75ex depth1.25ex width 1pt &   \textit{CR@10} & \textit{P@10} \\
-   \hline
-   \bfseries Visual   & 43.6  (2.4) & 79.2 (-6.8) & \vrule height2.75ex depth1.25ex width 1pt & 48.4 (2.0)&  71.6 (2.8)& \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 76.1 & \vrule height2.75ex depth1.25ex width 1pt & 34.7 & 56.8\\\hline
-  \bfseries Textual  &  44.2  (2.9)  & 81.6 (-4.4) & \vrule height2.75ex depth1.25ex width 1pt & 51.6 (5.2) & 67.2 (-1.6)& \vrule height2.75ex depth1.25ex width 1pt &  39.7  & 74.9 & \vrule height2.75ex depth1.25ex width 1pt & 37.5 & 58.6\\\hline
-  \bfseries Combined & \bfseries 49.8  (8.5) & \bfseries 85.6 (-0.4) & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  51.7 (5.3)  & \bfseries 74.8  (6.0)& \vrule height2.75ex depth1.25ex width 1pt  & \bfseries 41.3 & \bfseries 80.5 & \vrule height2.75ex depth1.25ex width 1pt & \bfseries  42.8  & \bfseries 66.7 \\
-    \hline
-  \end{tabular}
-  \label{tbl:results}
 
-  
-  
-\end{table*} 
+
 
 \subsection{Relevance Estimation}
 \label{text-relevance}
@@ -198,7 +162,7 @@ We suggest a linear combination of this normalized data.
 \begin{equation}
 Rel(x) = \alpha \times tags_x + \beta \times views_x + \gamma \times comments_x,
 \end{equation}
-where
+where $views_x$ and $comments_x$ denote number of views and number of comments, respectively and
 \begin{equation}
 tags_x = \frac{ \sum_{t \in \mathscr{T}_x} a\text{ prob}_{t,x} + b\text{ tfidf}_{t,x} + c\text{ stfidf}_{t,x}}{|\mathscr{T}_x|} , 
 \end{equation}
@@ -214,15 +178,15 @@ We found that the precision of image orderings, which are purely based on releva
 \subsection{Diversity Estimation}
 Diversity of an image to a ranking is defined as the minimal difference with the other images in that ranking:
 \begin{equation}
- Div(x) = min_{i \in \{1,\ldots,n\}}\left( 1 - s(x, \uptau(i))\right)
+ Div(x) = \min_{i \in \{1,\ldots,n\}} \left\{  1 - s(x, \uptau(i))\right\}
 \end{equation}
 
-We use a semantic similarity measure based on Google distance \cite{google-distance} to assess the difference between two images.
+We use a semantic similarity measure based on Google distance to assess the difference between two images.
 The average of the summation of the similarities between the different tags of both images gives us a value that describes the semantic similarity between both images.
 
 
 \section{Combined Run}
-With the availability of both textual and visual data, we can improve the above methods.
+% With the availability of both textual and visual data, we can improve the above methods.
 % We use textual data to estimate the relevance of an image while visual data is used for assessing the similarity.
 % Next, we give a brief overview of the implemented algorithm.
 % \subsection{Overview}
@@ -230,38 +194,55 @@ To estimate the relevance of an image, we use the textual-based method (cf. Sect
 Similarity between images is based on visual image features and a Gaussian kernel method to measure the difference between two image vectors (cf. Equation \ref{gaussian-similarity}).
 In order to provide both a relevant and diverse ordering, we make use of hierarchical clustering techniques.
 We, again, try to refine a set of $m$ images retrieved from Flickr to a ranking of size $n$.
-\begin{itemize}
+\begin{itemize}[leftmargin=*]
  \item First, $l$ images are selected with the highest estimated relevance. $l$ is an arbitrary number that depicts a subset of the final ranking. 
 The larger $l$ becomes, the more the focus will shift from relevance to diversity. 
 %  Denote that $l$ is a measure for the number of images that is clustered and optimalized for diversity purposes.
 %  This step ensures that the ordering will consist mostly out of highly relevant images.
  \item Next, these $l$ images are hierarchically clustered based on a distance matrix calculated with the above described visual similarity.
- \item Per cluster, the most relevant item is selected and added to the final ranking.
+Per cluster, the most relevant item is selected and added to the final ranking.
  \item Depending on the number of remaining places of the first $l$ spots in the final ranking, images are greedily added based on a \textbf{gain} score.
  This score is higher for images that maximize the diversity and relevance related to the current ranking.
  \item When the first $l$ spots in the ranking are filled, the algorithm starts from the beginning until all $n$ spots are taken.
- 
 \end{itemize}
 
 
-
+\begin{table}[H]
+\centering
+\caption{Results on subset of 50 locations from test set (in \%) with crowd-sourced ground truth.}
+\setlength{\tabcolsep}{.25667em}
+ \begin{tabular}{|r|c|ccc|ccc|c|}
+\cline{2-9}
+%    \multicolumn{1}{c|}{ } & \multicolumn{7}{c}{\bfseries Subset of test set}  &  \\\cline{2-9}    
+   \multicolumn{1}{c|}{ } & \multicolumn{2}{c}{ GT$_1$}  & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c}{ GT$_2$} & \vrule height2.75ex depth1.25ex width 1pt & \multicolumn{2}{c|}{ GT$_3$}  \\\cline{2-9}
+   \multicolumn{1}{c|}{ } &  \textit{CR@10} &   \textit{P@10} & \vrule height2.75ex depth1.25ex width 1pt &  \textit{CR@10} &  \textit{P@10} & \vrule height2.75ex depth1.25ex width 1pt &  \textit{CR@10} &   \textit{P@10}\\
+   \hline
+   \bfseries Visual   & 83.0 &72.5 & \vrule height2.75ex depth1.25ex width 1pt & 78.7  & 72.5  & \vrule height2.75ex depth1.25ex width 1pt & 69.9 & 72.5  \\\hline
+  \bfseries Textual & 77.7  &65.7 & \vrule height2.75ex depth1.25ex width 1pt & 72.1 & 65.7& \vrule height2.75ex depth1.25ex width 1pt & 63.5  & 65.7 \\\hline
+  \bfseries Combined &  83.6 & 69.4 & \vrule height2.75ex depth1.25ex width 1pt & 77.4  & 69.4& \vrule height2.75ex depth1.25ex width 1pt  &  66.1 &  69.4  \\
+    \hline
+  \end{tabular}
+  \label{tbl:crowd-results}  
+\end{table} 
 
 \section{Experiments}
-To compare our methods, we refine the rankings of all locations in the development set and evaluate them with the delivered ground truth.
+% To compare our methods, we refine the rankings of all locations in the development set and evaluate them with the delivered ground truth.
 % We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
 In Table \ref{tbl:results}, we can see the results of our algorithms (three runs), compared to the regular Flickr ranking and the results on the test set.
 We notice that the combined method creates the most precise and diverse rankings based on both precision and cluster recall measures (averages 42.1\% cluster recall on test set). 
+% Our algorithms are fine-tuned based on results retrieved from development set. 
 % The precision of the image orderings is heavily based on the used data to retrieve images from Flickr. 
 % Results on the test set show a cluster recall of around 42\% for the best method.
 % Image sets retrieved based on GPS data have by default a high precision, thus making it harder to improve in that area.
 We also observe the similarity of the visual run and the textual run in terms of effectiveness.
+Table \ref{tbl:crowd-results} lists the results on 50 locations of the test set evaluated with three crowd-sourced ground truths.
 %  When not using GPS data to retrieve images linked to a certain monument results are more scattered resulting in a 'accidental' higher cluster recall.   
 
 \section{Conclusions}
 We observe that a method clustering images focused on high relevance outperforms all others.
 This method uses textual data for the relevance estimation and visual features for the diversity assessment.
 % Retrieving both diverse and relevant images involves the accurate ana
-For future work, we plan to incorporate tag refinement in order to enhance the relevance estimation. In addition, we plan to incorporate textual data in the diversity estimation.
+% For future work, we plan to incorporate tag refinement in order to enhance the relevance estimation. In addition, we plan to incorporate textual data in the diversity estimation.
 
 %
 % The following two commands are all you need in the

@@ -4,45 +4,45 @@ The top-level auxiliary file: mediaeval.aux
 The style file: abbrv.bst
 Database file #1: mediaeval.bib
 Warning--empty journal in representativeness
-You've used 4 entries,
+You've used 3 entries,
             2118 wiz_defined-function locations,
-            517 strings with 4484 characters,
-and the built_in function-call counts, 1233 in all, are:
-= -- 108
-> -- 87
+            512 strings with 4359 characters,
+and the built_in function-call counts, 991 in all, are:
+= -- 85
+> -- 74
 < -- 0
-+ -- 35
-- -- 30
-* -- 83
-:= -- 232
-add.period$ -- 12
-call.type$ -- 4
-change.case$ -- 27
++ -- 29
+- -- 26
+* -- 71
+:= -- 187
+add.period$ -- 9
+call.type$ -- 3
+change.case$ -- 22
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 44
-empty$ -- 78
-format.name$ -- 30
-if$ -- 239
+cite$ -- 4
+duplicate$ -- 34
+empty$ -- 61
+format.name$ -- 26
+if$ -- 191
 int.to.chr$ -- 0
-int.to.str$ -- 4
-missing$ -- 4
-newline$ -- 23
-num.names$ -- 8
-pop$ -- 33
+int.to.str$ -- 3
+missing$ -- 3
+newline$ -- 18
+num.names$ -- 6
+pop$ -- 28
 preamble$ -- 1
-purify$ -- 23
+purify$ -- 19
 quote$ -- 0
-skip$ -- 27
+skip$ -- 19
 stack$ -- 0
-substring$ -- 21
-swap$ -- 3
+substring$ -- 15
+swap$ -- 2
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 16
+type$ -- 12
 warning$ -- 1
-while$ -- 8
-width$ -- 5
-write$ -- 42
+while$ -- 6
+width$ -- 4
+write$ -- 32
 (There was 1 warning)

@@ -7,16 +7,12 @@ R.~Anca-Livia, J.~St{\"o}ttinger, B.~Ionescu, M.~Men{\'e}ndez, and
   analysis.
 \newblock 2012.
 
-\bibitem{google-distance}
-R.~Cilibrasi and P.~Vitanyi.
-\newblock The {G}oogle similarity distance.
-\newblock {\em Knowledge and Data Engineering, IEEE Transactions on}, 2007.
-
 \bibitem{mediaeval-diversephotos}
 B.~Ionescu, M.~Men\'endez, H.~M\"uller, and A.~Popescu.
 \newblock Retrieving diverse social images at mediaeval 2013: Objectives,
   dataset and evaluation.
-\newblock In {\em MediaEval 2013 Workshop}, Barcelona, Spain, 2013.
+\newblock In {\em MediaEval 2013 Workshop, CEUR-WS.org}, Barcelona, Spain,
+  2013.
 
 \bibitem{textual-diversification}
 M.~Wang, K.~Yang, X.-S. Hua, and H.-J. Zhang.
