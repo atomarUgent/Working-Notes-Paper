@@ -206,10 +206,10 @@ Per cluster, the most relevant item is selected and added to the final ranking.
  \item When the first $l$ spots in the ranking are filled, the algorithm starts from the beginning until all $n$ spots are taken.
 \end{itemize}
 
-
+\setlength{\textfloatsep}{0.5cm}
 \begin{table}[H]
 \centering
-\caption{Results on subset of 50 locations from test set (in \%) with crowd-sourced ground truth.}
+\caption{Results on subset of 50 locations from test set (in \%) with crowd-sourcing ground truth.}
 \setlength{\tabcolsep}{.25667em}
  \begin{tabular}{|r|c|ccc|ccc|c|}
 \cline{2-9}
@@ -221,21 +221,23 @@ Per cluster, the most relevant item is selected and added to the final ranking.
   \bfseries Textual & 77.7  &65.7 & \vrule height2.75ex depth1.25ex width 1pt & 72.1 & 65.7& \vrule height2.75ex depth1.25ex width 1pt & 63.5  & 65.7 \\\hline
   \bfseries Combined &  83.6 & 69.4 & \vrule height2.75ex depth1.25ex width 1pt & 77.4  & 69.4& \vrule height2.75ex depth1.25ex width 1pt  &  66.1 &  69.4  \\
     \hline
-  \end{tabular}
-  \label{tbl:crowd-results}  
-\end{table} 
+    \end{tabular}
+  \label{tbl:crowd-results}
+\end{table}
 
 \section{Experiments}
 % To compare our methods, we refine the rankings of all locations in the development set and evaluate them with the delivered ground truth.
 % We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
 In Table \ref{tbl:results}, we can see the results of our algorithms (three runs), compared to the regular Flickr ranking and the results on the test set.
-We notice that the combined method creates the most precise and diverse rankings based on both precision and cluster recall measures (averages 42.1\% cluster recall on test set). 
+We notice that the combined method creates the most precise and diverse rankings based on both precision and cluster recall measures (averages 42.1\% cluster recall on test set).
+Analysis of the results on the development indicate the importance of finding the right balance between relevance and diversity.
 % Our algorithms are fine-tuned based on results retrieved from development set. 
 % The precision of the image orderings is heavily based on the used data to retrieve images from Flickr. 
 % Results on the test set show a cluster recall of around 42\% for the best method.
 % Image sets retrieved based on GPS data have by default a high precision, thus making it harder to improve in that area.
 We also observe the similarity of the visual run and the textual run in terms of effectiveness.
-Table \ref{tbl:crowd-results} lists the results on 50 locations of the test set evaluated with three crowd-sourced ground truths.
+Table \ref{tbl:crowd-results} lists the results on 50 locations of the test set evaluated with crowd-sourcing ground truths.
+
 %  When not using GPS data to retrieve images linked to a certain monument results are more scattered resulting in a 'accidental' higher cluster recall.   
 
 \section{Conclusions}
