@@ -73,7 +73,7 @@ This task focuses on result diversification in the context of social image retri
 
 We suggest a cluster-based approach for the visual run and a semantic similarity-based approach for the textual run.
 The third run focuses on hierarchical clustering of relevant images and represents a combination of the purely visual and textual techniques.
-In the following sections, we will discuss each of these approaches individually in more detail.
+
 
 
 \begin{table*}[t]
@@ -97,7 +97,7 @@ In the following sections, we will discuss each of these approaches individually
 \section{Visual Run}
 \label{visual-similarity}
 We propose a hierarchical clustering-based approach for the ranking of images in accordance with their relevance and diversity for a specific location. 
-Inter-cluster and intra-cluster ranking forms the basis of this method and is inspired by \cite{representativeness}.
+This method build on the approach provided in \cite{representativeness}. It introduces an inter-cluster ranking machanism and  differs on use of feature vectors, distance measure and Synthetic Representative Image (SRI) calculation method.
 % This method tries to tackle the problem of relevance and diversification as a single problem instead of two different problems. 
 We want to refine a set of $m$ images retrieved from Flickr to a ranking of size $n$.
 \begin{itemize}[leftmargin=*]
