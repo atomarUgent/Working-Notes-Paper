@@ -73,12 +73,12 @@ This task focuses on result diversification in the context of social image retri
 
 We suggest a cluster-based approach for the visual run and a semantic similarity-based approach for the textual run.
 The third run focuses on hierarchical clustering of relevant images and represents a combination of the purely visual and textual techniques.
-
+% In the following sections, we will discuss the approaches in more detail
 
 
 \begin{table*}[t]
 \centering
-\caption{Results (in \%). Numbers between brackets denote the relative difference to the Flickr ranking, while CR denotes the cluster recall of the ranking.}
+\caption{Results (in \%). Numbers between brackets denote the relative difference to the Flickr ranking and CR denotes the cluster recall of the ranking.}
  \begin{tabular}{|r|c|ccc|ccc|ccc|c|}
 \cline{2-12}
    \multicolumn{1}{c|}{ } & \multicolumn{5}{c}{\bfseries Development Set (comparison with Flickr)}  & \vrule height2.75ex depth1.25ex width 1pt &  \multicolumn{5}{c|}{\bfseries Test Set} \\\cline{2-12}    
@@ -97,7 +97,8 @@ The third run focuses on hierarchical clustering of relevant images and represen
 \section{Visual Run}
 \label{visual-similarity}
 We propose a hierarchical clustering-based approach for the ranking of images in accordance with their relevance and diversity for a specific location. 
-This method build on the approach provided in \cite{representativeness}. It introduces an inter-cluster ranking machanism and  differs on use of feature vectors, distance measure and Synthetic Representative Image (SRI) calculation method.
+This method builds on the approach provided in \cite{representativeness}.
+It introduces an inter-cluster ranking machanism and differs on use of feature vectors, distance measure and Synthetic Representative Image (SRI) calculation method.
 % This method tries to tackle the problem of relevance and diversification as a single problem instead of two different problems. 
 We want to refine a set of $m$ images retrieved from Flickr to a ranking of size $n$.
 \begin{itemize}[leftmargin=*]
@@ -113,7 +114,7 @@ The SRI for a set of images is calculated by taking the mean of all the correspo
 Intra-cluster ranking of all of the $m$ images is produced by calculating their Euclidean distance to the SRI.
 The image with rank 1 (topmost rank) is closest to the SRI of the cluster.
 \item Subsequently, we rank the $k$ different clusters, again by calculating the distance of the cluster SRIs to a general SRI value, which is the mean over all cluster SRIs. 
-Finally, $n$ images are selected by iterating over the ranked clusters and taking the topmost ranked image within this cluster. 
+Finally, $n$ images are selected by iterating over the ranked clusters and taking the topmost ranked image within each cluster. 
 
 % Final ranking on the images is produced as the combination of the cluster ranking and image ranking within each cluster. 
 \end{itemize}
@@ -162,7 +163,7 @@ We suggest a linear combination of this normalized data.
 \begin{equation}
 Rel(x) = \alpha \times tags_x + \beta \times views_x + \gamma \times comments_x,
 \end{equation}
-where $views_x$ and $comments_x$ denote number of views and number of comments, respectively and
+where $views_x$ and $comments_x$ denote normalized number of views and number of comments, respectively and
 \begin{equation}
 tags_x = \frac{ \sum_{t \in \mathscr{T}_x} a\text{ prob}_{t,x} + b\text{ tfidf}_{t,x} + c\text{ stfidf}_{t,x}}{|\mathscr{T}_x|} , 
 \end{equation}
@@ -203,10 +204,9 @@ The larger $l$ becomes, the more the focus will shift from relevance to diversit
 Per cluster, the most relevant item is selected and added to the final ranking.
  \item Depending on the number of remaining places of the first $l$ spots in the final ranking, images are greedily added based on a \textbf{gain} score.
  This score is higher for images that maximize the diversity and relevance related to the current ranking.
- \item When the first $l$ spots in the ranking are filled, the algorithm starts from the beginning until all $n$ spots are taken.
+ \item When the first $l$ spots in the ranking are filled, the algorithm runs from the start until all $n$ spots are taken.
 \end{itemize}
 
-\setlength{\textfloatsep}{0.5cm}
 \begin{table}[H]
 \centering
 \caption{Results on subset of 50 locations from test set (in \%) with crowd-sourcing ground truth.}
@@ -230,7 +230,7 @@ Per cluster, the most relevant item is selected and added to the final ranking.
 % We compare the measurements with the regular Flickr rankings to get a general idea of the functioning of our algorithm.
 In Table \ref{tbl:results}, we can see the results of our algorithms (three runs), compared to the regular Flickr ranking and the results on the test set.
 We notice that the combined method creates the most precise and diverse rankings based on both precision and cluster recall measures (averages 42.1\% cluster recall on test set).
-Analysis of the results on the development indicate the importance of finding the right balance between relevance and diversity.
+Analysis of the results on the development set indicate the importance of finding the right balance between relevance and diversity.
 % Our algorithms are fine-tuned based on results retrieved from development set. 
 % The precision of the image orderings is heavily based on the used data to retrieve images from Flickr. 
 % Results on the test set show a cluster recall of around 42\% for the best method.
